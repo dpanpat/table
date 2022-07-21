@@ -136,7 +136,13 @@ export default class Table {
 
   handlePaste(event){
     let pastedData = (event.clipboardData || window.clipboardData).getData('Text');
-    this.setCellContent(this.focusedCell.row,this.focusedCell.column, pastedData)
+    if (window.getSelection) {
+      let selObj = window.getSelection();
+      let selRange = selObj.getRangeAt(0);
+      selRange.deleteContents();
+      selRange.insertNode(document.createTextNode(pastedData));
+      selObj.collapseToEnd()
+    }
     event.stopPropagation()
     event.preventDefault()
   }
