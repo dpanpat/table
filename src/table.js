@@ -134,6 +134,13 @@ export default class Table {
     return this.wrapper;
   }
 
+  handlePaste(event){
+    let pastedData = (event.clipboardData || window.clipboardData).getData('Text');
+    this.setCellContent(this.focusedCell.row,this.focusedCell.column, pastedData)
+    event.stopPropagation()
+    event.preventDefault()
+  }
+
   /**
    * Hangs the necessary handlers to events
    */
@@ -152,6 +159,7 @@ export default class Table {
 
     // Determine the position of the cell in focus
     this.table.addEventListener('focusin', event => this.focusInTableListener(event));
+    this.table.addEventListener('paste', event => this.handlePaste(event));
   }
 
   /**
@@ -320,6 +328,13 @@ export default class Table {
     const cell = this.getCell(row, column);
 
     cell.innerHTML = content;
+  }
+
+  setCellContentMove(row, column, content) {
+    const cell = this.getCell(row, column);
+
+    cell.innerHTML = content;
+    cell.setSelectionRange(10,10)
   }
 
   /**
