@@ -330,13 +330,6 @@ export default class Table {
     cell.innerHTML = content;
   }
 
-  setCellContentMove(row, column, content) {
-    const cell = this.getCell(row, column);
-
-    cell.innerHTML = content;
-    cell.setSelectionRange(10,10)
-  }
-
   /**
    * Add column in table on index place
    * Add cells in each row
